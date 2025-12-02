@@ -19,6 +19,9 @@ class SplashScreenActivity : AppCompatActivity() {
 
         val mainHandler = Handler(Looper.getMainLooper())
         mainHandler.postDelayed({
+            val intent = Intent(this, AutenticacaoActivity::class.java)
+            startActivity(intent)
+            finish()
 
         }, SPLACH_TIME_OUT)
 

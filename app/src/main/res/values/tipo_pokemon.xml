@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pokemon_types_array">
+        <item>Normal</item>
+        <item>Fogo</item>
+        <item>Água</item>
+        <item>Grama</item>
+        <item>Elétrico</item>
+        <item>Gelo</item>
+        <item>Lutador</item>
+        <item>Venenoso</item>
+        <item>Terra</item>
+        <item>Voador</item>
+    </string-array>
+</resources>
