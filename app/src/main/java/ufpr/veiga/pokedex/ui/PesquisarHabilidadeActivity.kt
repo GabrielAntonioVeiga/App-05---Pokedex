@@ -13,9 +13,7 @@ import ufpr.veiga.pokedex.network.RetrofitClient
 class PesquisarHabilidadeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPesquisarHabilidadeBinding
-
     private val pokemonService = RetrofitClient.pokemonApi
-
     private lateinit var adapter: PokemonAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +22,11 @@ class PesquisarHabilidadeActivity : AppCompatActivity() {
         binding = ActivityPesquisarHabilidadeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = PokemonAdapter(listOf())
+        // adapter agora trabalha com List<PokemonRequest>
+        adapter = PokemonAdapter(listOf()) { pokemon ->
+            mostrarMensagem("Você clicou em: ${pokemon.nome}")
+        }
+
         binding.recyclerPokemons.layoutManager = LinearLayoutManager(this)
         binding.recyclerPokemons.adapter = adapter
 

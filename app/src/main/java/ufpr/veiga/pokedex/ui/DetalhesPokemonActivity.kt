@@ -42,7 +42,7 @@ class DetalhesPokemonActivity : AppCompatActivity() {
             binding.spinnerPokemonType.setSelection(tipoIndex)
         }
 
-        val habilidades = pokemon.habilidades.split(";")
+        val habilidades = pokemon.habilidades
         if (habilidades.isNotEmpty()) {
             binding.etAbility1.setText(habilidades[0])
         }
@@ -80,7 +80,7 @@ class DetalhesPokemonActivity : AppCompatActivity() {
             return
         }
 
-        val habilidadesString = habilidades.joinToString(separator = ";")
+        val habilidadesString = habilidades
 
         val pokemonAtualizado = PokemonRequest(
             id = pokemon.id,

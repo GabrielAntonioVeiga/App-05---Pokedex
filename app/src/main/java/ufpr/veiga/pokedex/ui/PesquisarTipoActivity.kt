@@ -24,7 +24,11 @@ class PesquisarTipoActivity : AppCompatActivity() {
         binding = ActivityPesquisarTipoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = PokemonAdapter(listOf())
+        // agora com callback
+        adapter = PokemonAdapter(listOf()) { pokemon ->
+            mostrarMensagem("Você clicou em: ${pokemon.nome}")
+        }
+
         binding.recyclerPokemons.layoutManager = LinearLayoutManager(this)
         binding.recyclerPokemons.adapter = adapter
 

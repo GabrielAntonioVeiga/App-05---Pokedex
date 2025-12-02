@@ -44,7 +44,7 @@ class CadastrarPokemonActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            cadastrar(PokemonRequest(nome, tipo, habilidades, userEmail, null))
+            cadastrar(PokemonRequest(null, nome, tipo, habilidades, userEmail, null))
         }
     }
 

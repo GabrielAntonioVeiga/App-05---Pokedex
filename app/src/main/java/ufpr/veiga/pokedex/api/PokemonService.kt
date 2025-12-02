@@ -23,10 +23,10 @@ interface PokemonService {
     suspend fun deletarPokemon(@Path("id") id: Long): Response<Void>
 
     @GET("pokemon/by-habilidade")
-    suspend fun listarPorHabilidade(@Query("habilidade") habilidade: String): List<String>
+    suspend fun listarPorHabilidade(@Query("habilidade") habilidade: String): List<PokemonRequest>
 
     @GET("pokemon/by-tipo")
-    suspend fun listarPorTipo(@Query("tipo") tipo: String): List<String>
+    suspend fun listarPorTipo(@Query("tipo") tipo: String): List<PokemonRequest>
 
     @GET("pokemon/count")
     suspend fun contarPokemons(): Int
