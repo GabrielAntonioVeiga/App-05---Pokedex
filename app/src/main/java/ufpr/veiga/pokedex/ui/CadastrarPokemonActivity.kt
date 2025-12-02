@@ -43,7 +43,7 @@ class CadastrarPokemonActivity : AppCompatActivity() {
             }
 
             val habilidadesString = habilidades.joinToString(separator = ";")
-            cadastrar(PokemonRequest(nome, tipo, habilidadesString, userEmail, null))
+            cadastrar(PokemonRequest(null, nome, tipo, habilidadesString, userEmail, null))
         }
     }
 

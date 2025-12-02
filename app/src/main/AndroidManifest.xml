@@ -25,6 +25,9 @@
             android:name=".ui.ListarPokemonActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.DetalhesPokemonActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.CadastrarPokemonActivity"
             android:exported="false" />
         <activity
