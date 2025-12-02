@@ -103,7 +103,7 @@ class DashboardActivity : AppCompatActivity() {
                 intent.putExtra("email", emailToPass)
                 startActivity(intent)
             }
-            R.id.menuSair -> finish()
+            R.id.menuSair -> finishAffinity()
         }
         return super.onOptionsItemSelected(item)
     }
