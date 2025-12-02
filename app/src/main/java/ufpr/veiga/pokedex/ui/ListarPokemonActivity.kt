@@ -29,7 +29,7 @@ class ListarPokemonActivity : AppCompatActivity() {
     }
 
     private fun configurarRecyclerView() {
-        adapter = PokemonAdapter { pokemon ->
+        adapter = PokemonAdapter(emptyList()) { pokemon ->
             abrirDetalhes(pokemon)
         }
 
@@ -41,7 +41,7 @@ class ListarPokemonActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val pokemons = pokemonService.listarTodos()
-                adapter.atualizarLista(pokemons)
+                adapter.update(pokemons)
             } catch (e: Exception) {
                 mostrarMensagemErro()
             }
