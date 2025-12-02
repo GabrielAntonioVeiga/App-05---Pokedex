@@ -1,21 +1,69 @@
 package ufpr.veiga.pokedex.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import ufpr.veiga.pokedex.R
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.launch
+import ufpr.veiga.pokedex.databinding.ActivityPesquisarTipoBinding
+import ufpr.veiga.pokedex.network.RetrofitClient
 
 class PesquisarTipoActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityPesquisarTipoBinding
+
+    private val pokemonService = RetrofitClient.pokemonApi
+
+    private lateinit var adapter: PokemonAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_pesquisar_tipo)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        binding = ActivityPesquisarTipoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        adapter = PokemonAdapter(listOf())
+        binding.recyclerPokemons.layoutManager = LinearLayoutManager(this)
+        binding.recyclerPokemons.adapter = adapter
+
+        binding.btnPesquisarTipo.setOnClickListener {
+            val tipo = binding.etTipo.text.toString().trim()
+
+            if (tipo.isEmpty()) {
+                Toast.makeText(this, "Digite um tipo!", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            pesquisar(tipo)
         }
+    }
+
+    private fun pesquisar(tipo: String) {
+        lifecycleScope.launch {
+            try {
+                val resultado = pokemonService.listarPorTipo(tipo)
+
+                if (resultado.isEmpty()) {
+                    mostrarMensagem("Nenhum Pokémon encontrado para esse tipo.")
+                    adapter.update(emptyList())
+                    return@launch
+                }
+
+                adapter.update(resultado)
+
+            } catch (e: Exception) {
+                mostrarMensagem("Erro ao pesquisar. Tente novamente.")
+            }
+        }
+    }
+
+    private fun mostrarMensagem(mensagem: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Aviso")
+            .setMessage(mensagem)
+            .setPositiveButton("OK", null)
+            .show()
     }
 }
