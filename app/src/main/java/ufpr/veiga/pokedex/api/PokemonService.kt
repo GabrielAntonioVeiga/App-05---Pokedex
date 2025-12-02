@@ -2,7 +2,11 @@ package ufpr.veiga.pokedex.api
 
 import retrofit2.Response
 import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
 import ufpr.veiga.pokedex.dto.PokemonRequest
+import ufpr.veiga.pokedex.dto.TipoContagem
 
 interface PokemonService {
 
@@ -23,4 +27,14 @@ interface PokemonService {
 
     @GET("pokemon/by-tipo")
     suspend fun listarPorTipo(@Query("tipo") tipo: String): List<String>
+
+    @GET("pokemon/count")
+    suspend fun contarPokemons(): Int
+
+    @GET("pokemon/top/tipos")
+    suspend fun topTipos(): List<TipoContagem>
+
+    @GET("pokemon/top/habilidades")
+    suspend fun topHabilidades(): List<TipoContagem>
+
 }

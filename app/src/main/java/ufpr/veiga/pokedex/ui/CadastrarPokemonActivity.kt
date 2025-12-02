@@ -31,19 +31,20 @@ class CadastrarPokemonActivity : AppCompatActivity() {
         binding.btnUploadPokemon.setOnClickListener {
             val nome = binding.etPokemonName.text.toString()
             val tipo = binding.spinnerPokemonType.selectedItem?.toString()
-            val habilidades = listOf(
+            val habilidadesInput = listOf(
                 binding.etAbility1.text.toString(),
                 binding.etAbility2.text.toString(),
                 binding.etAbility3.text.toString()
             )
+
+            val habilidades = habilidadesInput.filter { it.isNotBlank() }
 
             if (nome.isEmpty() || tipo.isNullOrEmpty() || habilidades.isEmpty()) {
                 Toast.makeText(this, "Preencha o nome, o tipo e pelo menos 1 habilidade.", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
-            val habilidadesString = habilidades.joinToString(separator = ";")
-            cadastrar(PokemonRequest(null, nome, tipo, habilidadesString, userEmail, null))
+            cadastrar(PokemonRequest(nome, tipo, habilidades, userEmail, null))
         }
     }
 

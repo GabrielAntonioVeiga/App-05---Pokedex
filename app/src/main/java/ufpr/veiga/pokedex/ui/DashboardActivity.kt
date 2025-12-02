@@ -12,11 +12,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import ufpr.veiga.pokedex.R
+import ufpr.veiga.pokedex.network.RetrofitClient
 
 class DashboardActivity : AppCompatActivity() {
 
     private var loggedInUserEmail: String? = null
+
+    private val pokemonService = RetrofitClient.pokemonApi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,24 +33,31 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun loadDashboardData() {
-        val totalPokemons = 3
-        val topTipos: List<Pair<String, Int>> = listOf(
-            "Fogo" to 15,
-            "Água" to 42,
-            "Elétrico" to 10
-        )
+        lifecycleScope.launch {
+            try {
 
-        val topHabilidades: List<Pair<String, Int>> = listOf(
-            "Habilidade1" to 1,
-            "Habilidade2" to 2,
-            "Habilidade3" to 3
-        )
+            val totalPokemons = pokemonService.contarPokemons()
+
+            val topTiposPokemon = pokemonService.topTipos()
+            val topTipos: List<Pair<String, Int>> = topTiposPokemon.map {
+                it.tipo to it.quantidade
+            }
+
+            val topHabilidadesPokemon = pokemonService.topHabilidades()
+            val topHabilidades: List<Pair<String, Int>> = topHabilidadesPokemon.map {
+                it.tipo to it.quantidade
+            }
+
+            findViewById<TextView>(R.id.tvTotalPokemons).text = totalPokemons.toString()
+
+            fillList(findViewById(R.id.containerTopTipos), topTipos)
+            fillList(findViewById(R.id.containerTopHabilidades), topHabilidades)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
 
 
-        findViewById<TextView>(R.id.tvTotalPokemons).text = totalPokemons.toString()
-
-        fillList(findViewById(R.id.containerTopTipos), topTipos)
-        fillList(findViewById(R.id.containerTopHabilidades), topHabilidades)
     }
 
     private fun fillList(container: LinearLayout, items: List<Pair<String, Int>>) {

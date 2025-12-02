@@ -6,7 +6,7 @@ data class PokemonRequest(
     val id: Long?,
     val nome: String,
     val tipo: String,
-    val habilidades: String,
+    val habilidades: List<String>,
     val emailusuario: String?,
     val mensagemErro: String?
 ) : Serializable
